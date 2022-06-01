@@ -13,4 +13,10 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		alignSelf: 'stretch',
 	},
+	loaderContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
+	},
 });

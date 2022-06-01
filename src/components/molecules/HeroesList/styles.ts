@@ -6,4 +6,10 @@ export default StyleSheet.create({
 		marginHorizontal: scale(16),
 		paddingTop: scale(8),
 	},
+	loaderContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
+	},
 });

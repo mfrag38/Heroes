@@ -15,9 +15,13 @@ const height = Dimensions.get('window').height;
 const MovieHeader = ({
 	animatedValue,
 	poster,
+	shouldReplay,
+	replay,
 }: {
 	animatedValue: Animated.Value;
 	poster: string;
+	shouldReplay: boolean;
+	replay?: Function;
 }) => {
 	const { goBack } = useNavigation();
 	const MAX_HEIGHT = height / 2.75;
@@ -53,6 +57,16 @@ const MovieHeader = ({
 						<Icon name='chevron-left' size={24} color='#fff' />
 					</TouchableOpacity>
 				</View>
+				{shouldReplay ? (
+					<View style={styles.replayIconContainer}>
+						<TouchableOpacity
+							style={styles.backIconButton}
+							onPress={replay}
+						>
+							<Icon name='refresh' size={24} color='#fff' />
+						</TouchableOpacity>
+					</View>
+				) : null}
 			</ImageBackground>
 		</Animated.View>
 	);

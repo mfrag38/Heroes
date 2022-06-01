@@ -1,12 +1,27 @@
 import React, { useEffect } from 'react';
-import { Text, View, ScrollView, StatusBar, Animated } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import {
+	Text,
+	View,
+	ScrollView,
+	StatusBar,
+	Animated,
+	ActivityIndicator,
+	Alert,
+} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { scale } from 'react-native-utils-scale';
 import Separator from '../../components/atoms/Separator';
 import MovieHeader from '../../components/organisms/MovieHeader';
-import movies from '../../data/movies.json';
 import styles from './styles';
 import { getMovies } from '../../api/movies';
+import { generateRandom } from '../../utils/randomGenerator';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import {
+	clearMovie,
+	setIsLoading,
+	setMovie,
+} from '../../redux/slices/movieSlice';
 
 /**
  * The MovieDetailsScreen function returns a View component that contains a StatusBar component, a
@@ -20,27 +35,88 @@ import { getMovies } from '../../api/movies';
 const MovieDetailsScreen = () => {
 	const { params } = useRoute();
 
+	const { isLoading, movie } = useSelector((state: RootState) => state.movie);
+
+	const { goBack, addListener } = useNavigation();
+	const dispatch = useDispatch();
+
 	useEffect(() => {
-		getMovies('Iron Man', 1, {
-			success: (res: any) => {
-				console.log('The Res:', res);
-			},
-			error: (error: any) => {
-				console.log('The Error:', error);
-			},
+		const listener = addListener('beforeRemove', () => {
+			dispatch(clearMovie());
 		});
+
+		return listener;
+	}, []);
+
+	useEffect(() => {
+		dispatch(setIsLoading(true));
+		if (params.prev === 'HomeRandom') {
+			getMovies(params.randomName, {
+				success: (res: any) => {
+					if (res.Error) {
+						dispatch(setIsLoading(false));
+						Alert.alert(
+							'Error',
+							'Cannot find a movie for that random superhero.',
+							[
+								{
+									onPress: goBack,
+								},
+							],
+						);
+					} else {
+						dispatch(
+							setMovie(
+								res.Search[generateRandom(res.Search.length)],
+							),
+						);
+						dispatch(setIsLoading(false));
+					}
+				},
+				error: (error: any) => {
+					console.log('The Error:', error);
+					dispatch(setIsLoading(false));
+				},
+			});
+		} else {
+			getMovies(params.heroName, {
+				success: (res: any) => {
+					if (res.Error) {
+						dispatch(setIsLoading(false));
+						Alert.alert(
+							'Error',
+							`No movie found for ${params.heroName}`,
+							[
+								{
+									onPress: goBack,
+								},
+							],
+						);
+					} else {
+						dispatch(
+							setMovie(
+								res.Search[generateRandom(res.Search.length)],
+							),
+						);
+						dispatch(setIsLoading(false));
+					}
+				},
+				error: (error: any) => {
+					console.log('The Error:', error);
+					dispatch(setIsLoading(false));
+				},
+			});
+		}
 	}, []);
 
 	var AnimatedHeaderValue = new Animated.Value(0);
 
-	return (
-		<View
-			style={{
-				flex: 1,
-				justifyContent: 'center',
-				alignSelf: 'stretch',
-			}}
-		>
+	return isLoading ? (
+		<View style={styles.loaderContainer}>
+			<ActivityIndicator color='#000' size={scale(48)} />
+		</View>
+	) : (
+		<View style={styles.container}>
 			<StatusBar
 				animated
 				backgroundColor='#0000'
@@ -49,7 +125,12 @@ const MovieDetailsScreen = () => {
 			/>
 			<MovieHeader
 				animatedValue={AnimatedHeaderValue}
-				poster={movies[0].Poster}
+				poster={movie ? movie.Poster : ''}
+				shouldReplay={params.prev === 'HomeRandom'}
+				replay={() => {
+					params.onReturn(true);
+					goBack();
+				}}
 			/>
 			<View style={styles.bodyContainer}>
 				<ScrollView
@@ -69,28 +150,28 @@ const MovieDetailsScreen = () => {
 						<View style={styles.infoContainer}>
 							<Text style={styles.infoTitle}>Title:</Text>
 							<Text style={styles.infoValue}>
-								{movies[0].Title}
+								{movie ? movie.Title : ''}
 							</Text>
 						</View>
 						<Separator marginHorizontal={scale(16)} />
 						<View style={styles.infoContainer}>
 							<Text style={styles.infoTitle}>Year:</Text>
 							<Text style={styles.infoValue}>
-								{movies[0].Year}
+								{movie ? movie.Year : ''}
 							</Text>
 						</View>
 						<Separator marginHorizontal={scale(16)} />
 						<View style={styles.infoContainer}>
 							<Text style={styles.infoTitle}>Type:</Text>
 							<Text style={styles.infoValue}>
-								{movies[0].Type}
+								{movie ? movie.Type : ''}
 							</Text>
 						</View>
 						<Separator marginHorizontal={scale(16)} />
 						<View style={styles.infoContainer}>
 							<Text style={styles.infoTitle}>IMDB ID:</Text>
 							<Text style={styles.infoValue}>
-								{movies[0].imdbID}
+								{movie ? movie.imdbID : ''}
 							</Text>
 						</View>
 						<Separator marginHorizontal={scale(16)} />

@@ -1,8 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { Text, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import HeroesPreviewList from '../../molecules/HeroesPreviewList';
 import styles from './styles';
+import { RootState } from '../../../redux/store';
+import { scale } from 'react-native-utils-scale';
 
 /**
  * HeroesPreviewSection is a function that takes in an array of characters and returns a View component
@@ -12,8 +15,9 @@ import styles from './styles';
  * @characters  List of characters
  * @returns A View component with a View component with a Text component inside of it.
  */
-const HeroesPreviewSection = ({ characters }: { characters: any[] }) => {
+const HeroesPreviewSection = () => {
 	const { navigate } = useNavigation();
+	const { isLoading } = useSelector((state: RootState) => state.home);
 
 	return (
 		<View style={styles.container}>
@@ -33,7 +37,13 @@ const HeroesPreviewSection = ({ characters }: { characters: any[] }) => {
 						</Text>
 					</TouchableOpacity>
 				</View>
-				<HeroesPreviewList data={characters} />
+				{isLoading === true ? (
+					<View style={styles.loaderContainer}>
+						<ActivityIndicator color='#000' size={scale(48)} />
+					</View>
+				) : (
+					<HeroesPreviewList />
+				)}
 			</View>
 		</View>
 	);

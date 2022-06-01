@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import RoundedButton from '../../atoms/RoundedButton';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsRandomLoading } from '../../../redux/slices/homeSlice';
+import { getCharacters } from '../../../api/characters';
+import { RootState } from '../../../redux/store';
+import { generateRandom } from '../../../utils/randomGenerator';
 
 /**
  * It's a function that returns a View component that contains a Text component and a RoundedButton
@@ -11,6 +16,29 @@ import styles from './styles';
  */
 const GetRandomSection = () => {
 	const { navigate } = useNavigation();
+
+	const dispatch = useDispatch();
+
+	const { totalCharacters } = useSelector((state: RootState) => state.home);
+
+	const handleRandom = () => {
+		dispatch(setIsRandomLoading(true));
+		const random = generateRandom(totalCharacters);
+		getCharacters(random, {
+			success: (res: any) => {
+				dispatch(setIsRandomLoading(false));
+				navigate('MovieDetails', {
+					prev: 'HomeRandom',
+					randomName: res.data.results[0].name,
+					onReturn: (shouldReplay) => handleRandom(),
+				});
+			},
+			error: (error: any) => {
+				console.log('The Error:', error);
+				dispatch(setIsRandomLoading(false));
+			},
+		});
+	};
 
 	return (
 		<View style={styles.container}>
@@ -21,11 +49,7 @@ const GetRandomSection = () => {
 				buttonTitle='Randomize'
 				buttonColor='#DC143C'
 				titleColor='#fff'
-				onPress={() =>
-					navigate('MovieDetails', {
-						prev: 'Home',
-					})
-				}
+				onPress={handleRandom}
 			/>
 		</View>
 	);

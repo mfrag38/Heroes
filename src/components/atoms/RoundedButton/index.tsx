@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { scale } from 'react-native-utils-scale';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import styles from './styles';
 
 /**
@@ -22,6 +25,8 @@ const RoundedButton = ({
 	titleColor: string;
 	onPress: any;
 }) => {
+	const { isRandomLoading } = useSelector((state: RootState) => state.home);
+
 	return (
 		<View
 			style={[
@@ -32,16 +37,22 @@ const RoundedButton = ({
 			]}
 		>
 			<TouchableOpacity style={styles.buttonContainer} onPress={onPress}>
-				<Text
-					style={[
-						styles.buttonText,
-						{
-							color: titleColor,
-						},
-					]}
-				>
-					{buttonTitle}
-				</Text>
+				{isRandomLoading ? (
+					<View style={styles.loaderContainer}>
+						<ActivityIndicator color='#fff' size={scale(24)} />
+					</View>
+				) : (
+					<Text
+						style={[
+							styles.buttonText,
+							{
+								color: titleColor,
+							},
+						]}
+					>
+						{buttonTitle}
+					</Text>
+				)}
 			</TouchableOpacity>
 		</View>
 	);

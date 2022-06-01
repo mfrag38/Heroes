@@ -2,6 +2,11 @@ import { StyleSheet } from 'react-native';
 import { fontScale, scale } from 'react-native-utils-scale';
 
 export default StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignSelf: 'stretch',
+	},
 	bodyContainer: {
 		flex: 1,
 		justifyContent: 'center',
@@ -36,7 +41,13 @@ export default StyleSheet.create({
 		flex: 1,
 		fontSize: fontScale(20),
 		fontWeight: '600',
-		marginHorizontal: scale(16),
+		marginLeft: scale(16),
 		color: '#000',
+	},
+	loaderContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
 	},
 });

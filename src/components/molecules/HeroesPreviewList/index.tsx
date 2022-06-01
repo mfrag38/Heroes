@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import HeroPreviewItem from '../../atoms/HeroPreviewItem';
 import styles from './styles';
 
@@ -9,7 +11,9 @@ import styles from './styles';
  * @data Array of items that will be rendered
  * @returns A function that returns a list view.
  */
-const HeroesPreviewList = ({ data }: { data: any[] }) => {
+const HeroesPreviewList = () => {
+	const { characters } = useSelector((state: RootState) => state.home);
+
 	const RenderCharacters = ({ character }: { character: any }) => {
 		return <HeroPreviewItem character={character} />;
 	};
@@ -17,7 +21,7 @@ const HeroesPreviewList = ({ data }: { data: any[] }) => {
 	return (
 		<View style={styles.container}>
 			<FlatList
-				data={data}
+				data={characters}
 				renderItem={({ item }) => <RenderCharacters character={item} />}
 				horizontal
 				showsHorizontalScrollIndicator={false}

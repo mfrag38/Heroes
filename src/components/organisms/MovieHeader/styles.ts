@@ -30,5 +30,17 @@ export default StyleSheet.create({
 		justifyContent: 'center',
 		alignItems: 'center',
 		alignSelf: 'stretch',
+		backgroundColor: '#69696978',
+	},
+	replayIconContainer: {
+		width: scale(48),
+		height: scale(48),
+		justifyContent: 'center',
+		alignItems: 'center',
+		position: 'absolute',
+		right: scale(8),
+		top: StatusBar.currentHeight! + scale(8),
+		borderRadius: scale(24),
+		overflow: 'hidden',
 	},
 });

@@ -21,4 +21,10 @@ export default StyleSheet.create({
 		fontSize: fontScale(16),
 		fontWeight: '600',
 	},
+	loaderContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
+	},
 });

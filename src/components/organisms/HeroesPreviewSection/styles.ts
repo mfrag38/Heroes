@@ -41,4 +41,10 @@ export default StyleSheet.create({
 		fontSize: fontScale(16),
 		color: '#000',
 	},
+	loaderContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
+	},
 });

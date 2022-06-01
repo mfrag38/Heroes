@@ -1,19 +1,36 @@
 import React, { useEffect } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, ActivityIndicator } from 'react-native';
 import HeroesHeader from '../../components/organisms/HeroesHeader';
 import HeroesList from '../../components/molecules/HeroesList';
-import characters from '../../data/characters.json';
 import styles from './styles';
 import { getCharacters } from '../../api/characters';
+import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	increaseOffset,
+	setHeroesCharacters,
+	setIsLoading,
+} from '../../redux/slices/heroesSlice';
+import { scale } from 'react-native-utils-scale';
 
-const HeroesScreen = (props: any) => {
+const HeroesScreen = () => {
+	const { isLoading, offset } = useSelector(
+		(state: RootState) => state.heroes,
+	);
+
+	const dispatch = useDispatch();
+
 	useEffect(() => {
-		getCharacters(10, 0, {
+		dispatch(setIsLoading(true));
+		getCharacters(0, {
 			success: (res: any) => {
-				console.log('The Res:', res);
+				dispatch(setHeroesCharacters(res.data.results));
+				dispatch(increaseOffset(offset + res.data.limit));
+				dispatch(setIsLoading(false));
 			},
 			error: (error: any) => {
 				console.log('The Error:', error);
+				dispatch(setIsLoading(false));
 			},
 		});
 	}, []);
@@ -27,7 +44,13 @@ const HeroesScreen = (props: any) => {
 			/>
 			<HeroesHeader />
 			<View style={styles.bodyContainer}>
-				<HeroesList data={characters} />
+				{isLoading === true ? (
+					<View style={styles.loaderContainer}>
+						<ActivityIndicator color='#000' size={scale(48)} />
+					</View>
+				) : (
+					<HeroesList />
+				)}
 			</View>
 		</View>
 	);
