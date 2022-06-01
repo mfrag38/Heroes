@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, ScrollView, StatusBar, Animated } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { scale } from 'react-native-utils-scale';
@@ -6,6 +6,7 @@ import Separator from '../../components/atoms/Separator';
 import MovieHeader from '../../components/organisms/MovieHeader';
 import movies from '../../data/movies.json';
 import styles from './styles';
+import { getMovies } from '../../api/movies';
 
 /**
  * The MovieDetailsScreen function returns a View component that contains a StatusBar component, a
@@ -18,6 +19,17 @@ import styles from './styles';
  */
 const MovieDetailsScreen = () => {
 	const { params } = useRoute();
+
+	useEffect(() => {
+		getMovies('Iron Man', 1, {
+			success: (res: any) => {
+				console.log('The Res:', res);
+			},
+			error: (error: any) => {
+				console.log('The Error:', error);
+			},
+		});
+	}, []);
 
 	var AnimatedHeaderValue = new Animated.Value(0);
 
