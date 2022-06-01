@@ -1,13 +1,13 @@
 import React from 'react';
-import MovieHeader from './src/components/organisms/MovieHeader';
-import HeroesScreen from './src/screens/HeroesScreen';
-import HomeScreen from './src/screens/HomeScreen';
-import MovieDetailsScreen from './src/screens/MovieDetailsScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import StackNavigator from './src/navigation/StackNavigation';
 
 const App = () => {
-	// return <HomeScreen />;
-	// return <HeroesScreen />;
-	return <MovieDetailsScreen />;
+	return (
+		<NavigationContainer>
+			<StackNavigator />
+		</NavigationContainer>
+	);
 };
 
 export default App;

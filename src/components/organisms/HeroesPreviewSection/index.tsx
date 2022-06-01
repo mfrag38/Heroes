@@ -1,5 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import HeroesPreviewList from '../../molecules/HeroesPreviewList';
 import styles from './styles';
 
@@ -12,6 +13,8 @@ import styles from './styles';
  * @returns A View component with a View component with a Text component inside of it.
  */
 const HeroesPreviewSection = ({ characters }: { characters: any[] }) => {
+	const { navigate } = useNavigation();
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.sectionTitleContainer}>
@@ -21,7 +24,14 @@ const HeroesPreviewSection = ({ characters }: { characters: any[] }) => {
 			</View>
 			<View style={styles.listSectionContainer}>
 				<View style={styles.listTitleContainer}>
-					<Text style={styles.listTitle}>View Full List {'>'}</Text>
+					<TouchableOpacity
+						style={styles.listTitleButton}
+						onPress={() => navigate('Heroes')}
+					>
+						<Text style={styles.listTitle}>
+							View Full List {'>'}
+						</Text>
+					</TouchableOpacity>
 				</View>
 				<HeroesPreviewList data={characters} />
 			</View>

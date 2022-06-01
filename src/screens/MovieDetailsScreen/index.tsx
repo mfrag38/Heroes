@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View, ScrollView, StatusBar, Animated } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { scale } from 'react-native-utils-scale';
 import Separator from '../../components/atoms/Separator';
 import MovieHeader from '../../components/organisms/MovieHeader';
@@ -16,6 +17,8 @@ import styles from './styles';
  * @returns A view with a status bar, a movie header, and a view with a scroll view.
  */
 const MovieDetailsScreen = () => {
+	const { params } = useRoute();
+
 	var AnimatedHeaderValue = new Animated.Value(0);
 
 	return (

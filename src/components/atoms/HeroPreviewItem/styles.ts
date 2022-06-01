@@ -5,12 +5,18 @@ export default StyleSheet.create({
 	container: {
 		width: scale(300),
 		height: scale(300),
-		justifyContent: 'flex-end',
-		alignItems: 'flex-start',
+		justifyContent: 'center',
+		alignItems: 'center',
 		margin: scale(8),
-		padding: scale(16),
 		borderRadius: scale(16),
 		overflow: 'hidden',
+	},
+	imageContainer: {
+		flex: 1,
+		justifyContent: 'flex-end',
+		alignItems: 'flex-start',
+		alignSelf: 'stretch',
+		padding: scale(16),
 	},
 	characterName: {
 		alignSelf: 'stretch',

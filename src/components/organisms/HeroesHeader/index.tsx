@@ -1,13 +1,21 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import styles from './styles';
 
-const HeroesHeader = () => {
+const HeroesHeader = (props: any) => {
+	const { goBack } = useNavigation();
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.backIconContainer}>
-				<Icon name='chevron-left' size={24} color='#fff' />
+				<TouchableOpacity
+					style={styles.backIconButton}
+					onPress={goBack}
+				>
+					<Icon name='chevron-left' size={24} color='#fff' />
+				</TouchableOpacity>
 			</View>
 			<Text style={styles.title}>Heroes</Text>
 		</View>

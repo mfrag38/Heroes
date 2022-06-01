@@ -1,5 +1,6 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { ImageBackground, Text } from 'react-native';
+import { ImageBackground, Text, TouchableOpacity } from 'react-native';
 import styles from './styles';
 
 /**
@@ -9,16 +10,28 @@ import styles from './styles';
  * @returns A function that returns ImageBackground view.
  */
 const HeroPreviewItem = ({ character }: { character: any }) => {
+	const { navigate } = useNavigation();
+
 	return (
-		<ImageBackground
-			source={{
-				uri: `${character.thumbnail.path}.${character.thumbnail.extension}`,
-			}}
-			resizeMode='cover'
+		<TouchableOpacity
 			style={styles.container}
+			onPress={() =>
+				navigate('MovieDetails', {
+					prev: 'Home',
+					heroName: character.name,
+				})
+			}
 		>
-			<Text style={styles.characterName}>{character.name}</Text>
-		</ImageBackground>
+			<ImageBackground
+				source={{
+					uri: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+				}}
+				resizeMode='cover'
+				style={styles.imageContainer}
+			>
+				<Text style={styles.characterName}>{character.name}</Text>
+			</ImageBackground>
+		</TouchableOpacity>
 	);
 };
 

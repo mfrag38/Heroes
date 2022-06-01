@@ -10,6 +10,12 @@ export default StyleSheet.create({
 		overflow: 'hidden',
 		backgroundColor: '#DDD',
 	},
+	heroButton: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
+	},
 	heroImage: {
 		height: scale(150),
 		alignSelf: 'stretch',

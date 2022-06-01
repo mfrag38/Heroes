@@ -33,6 +33,10 @@ export default StyleSheet.create({
 		alignSelf: 'stretch',
 		paddingHorizontal: scale(16),
 	},
+	listTitleButton: {
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	listTitle: {
 		fontSize: fontScale(16),
 		color: '#000',

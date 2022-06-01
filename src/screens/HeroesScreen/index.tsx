@@ -5,7 +5,7 @@ import HeroesList from '../../components/molecules/HeroesList';
 import characters from '../../data/characters.json';
 import styles from './styles';
 
-const HeroesScreen = () => {
+const HeroesScreen = (props: any) => {
 	return (
 		<View style={styles.container}>
 			<StatusBar

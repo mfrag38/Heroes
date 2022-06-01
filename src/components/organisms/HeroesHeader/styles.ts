@@ -20,6 +20,13 @@ export default StyleSheet.create({
 		left: scale(8),
 		borderRadius: scale(24),
 		overflow: 'hidden',
+		zIndex: 1,
+	},
+	backIconButton: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		alignSelf: 'stretch',
 	},
 	title: {
 		flex: 1,

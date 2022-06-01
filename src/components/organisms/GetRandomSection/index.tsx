@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import RoundedButton from '../../atoms/RoundedButton';
 import styles from './styles';
 
@@ -9,6 +10,8 @@ import styles from './styles';
  * @returns A View component with a Text component and a RoundedButton component.
  */
 const GetRandomSection = () => {
+	const { navigate } = useNavigation();
+
 	return (
 		<View style={styles.container}>
 			<Text style={styles.sectionTitle}>
@@ -18,7 +21,11 @@ const GetRandomSection = () => {
 				buttonTitle='Randomize'
 				buttonColor='#DC143C'
 				titleColor='#fff'
-				onPress={() => {}}
+				onPress={() =>
+					navigate('MovieDetails', {
+						prev: 'Home',
+					})
+				}
 			/>
 		</View>
 	);
