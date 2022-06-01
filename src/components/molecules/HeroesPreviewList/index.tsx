@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import HeroesPreviewItem from '../../atoms/HeroesPreviewItem';
+import HeroPreviewItem from '../../atoms/HeroPreviewItem';
 import styles from './styles';
 
 /**
@@ -11,7 +11,7 @@ import styles from './styles';
  */
 const HeroesPreviewList = ({ data }: { data: any[] }) => {
 	const RenderCharacters = ({ character }: { character: any }) => {
-		return <HeroesPreviewItem character={character} />;
+		return <HeroPreviewItem character={character} />;
 	};
 
 	return (

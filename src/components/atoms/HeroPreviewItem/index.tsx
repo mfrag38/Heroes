@@ -8,7 +8,7 @@ import styles from './styles';
  * @character Character object that contains character info
  * @returns A function that returns ImageBackground view.
  */
-const HeroesPreviewItem = ({ character }: { character: any }) => {
+const HeroPreviewItem = ({ character }: { character: any }) => {
 	return (
 		<ImageBackground
 			source={{
@@ -22,4 +22,4 @@ const HeroesPreviewItem = ({ character }: { character: any }) => {
 	);
 };
 
-export default HeroesPreviewItem;
+export default HeroPreviewItem;

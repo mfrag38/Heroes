@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { scale } from 'react-native-utils-scale';
 import characters from '../../data/characters.json';
 import styles from './styles';
@@ -17,6 +17,11 @@ import HomeHeader from '../../components/organisms/HomeHeader';
 const HomeScreen = () => {
 	return (
 		<View style={styles.container}>
+			<StatusBar
+				animated
+				backgroundColor='#000'
+				barStyle='light-content'
+			/>
 			<HomeHeader />
 			<View style={styles.bodyContainer}>
 				<GetRandomSection />
