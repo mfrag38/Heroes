@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import Colors from '../../../constants/Colors';
+import ICharacter from '../../../models/character/ICharacter';
 import { setShouldShowReplay } from '../../../redux/slices/homeSlice';
 import { urlSecurity } from '../../../utils/httpsGenerator';
 import styles from './styles';
@@ -13,7 +13,7 @@ import styles from './styles';
  * @character Character object that contains character info
  * @returns A View component with an Image and a View component with a Text component.
  */
-const HeroItem = ({ character }: { character: any }) => {
+const HeroItem = ({ character }: { character: ICharacter }) => {
 	const { navigate } = useNavigation();
 	const dispatch = useDispatch();
 

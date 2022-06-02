@@ -1,26 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import IMovie from '../../models/movie/IMovie';
 
 export interface MovieState {
 	isLoading: boolean;
-	movie: any;
+	movie: IMovie | any;
 }
 
 const initState: MovieState = {
 	isLoading: false,
-	movie: null,
+	movie: {},
 };
 
 export const movieSlice = createSlice({
 	name: 'movie',
 	initialState: initState,
 	reducers: {
-		setIsLoading: (state: any, action: PayloadAction) => {
+		setIsLoading: (state: MovieState, action: PayloadAction<boolean>) => {
 			state.isLoading = action.payload;
 		},
-		setMovie: (state: any, action: PayloadAction) => {
+		setMovie: (state: MovieState, action: PayloadAction<IMovie>) => {
 			state.movie = action.payload;
 		},
-		clearMovie: (state: any) => {
+		clearMovie: (state: MovieState) => {
 			state.movie = {};
 		},
 	},

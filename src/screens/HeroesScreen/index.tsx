@@ -12,6 +12,7 @@ import {
 	setIsLoading,
 } from '../../redux/slices/heroesSlice';
 import { scale } from 'react-native-utils-scale';
+import ICharactersResponse from '../../models/charactersResponse/ICharactersResponse';
 
 const HeroesScreen = () => {
 	const { isLoading, offset } = useSelector(
@@ -23,7 +24,7 @@ const HeroesScreen = () => {
 	useEffect(() => {
 		dispatch(setIsLoading(true));
 		getCharacters(0, {
-			success: (res: any) => {
+			success: (res: ICharactersResponse) => {
 				dispatch(setHeroesCharacters(res.data.results));
 				dispatch(increaseOffset(offset + res.data.limit));
 				dispatch(setIsLoading(false));

@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ImageBackground, Text, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
+import ICharacter from '../../../models/character/ICharacter';
 import { setShouldShowReplay } from '../../../redux/slices/homeSlice';
 import { urlSecurity } from '../../../utils/httpsGenerator';
 import styles from './styles';
@@ -12,7 +13,7 @@ import styles from './styles';
  * @character Character object that contains character info
  * @returns A function that returns ImageBackground view.
  */
-const HeroPreviewItem = ({ character }: { character: any }) => {
+const HeroPreviewItem = ({ character }: { character: ICharacter }) => {
 	const { navigate } = useNavigation();
 	const dispatch = useDispatch();
 

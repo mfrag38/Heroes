@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ICharacter from '../../models/character/ICharacter';
 
 export interface HomeState {
 	isLoading: boolean;
 	isRandomLoading: boolean;
-	characters: any[];
-	totalCharacters: 0;
+	characters: ICharacter[];
+	totalCharacters: number;
 	shouldShowReplay: boolean;
 	shouldReplay: boolean;
 }
@@ -22,22 +23,34 @@ export const homeSlice = createSlice({
 	name: 'home',
 	initialState: initState,
 	reducers: {
-		setIsLoading: (state: any, action: PayloadAction) => {
+		setIsLoading: (state: HomeState, action: PayloadAction<boolean>) => {
 			state.isLoading = action.payload;
 		},
-		setIsRandomLoading: (state: any, action: PayloadAction) => {
+		setIsRandomLoading: (
+			state: HomeState,
+			action: PayloadAction<boolean>,
+		) => {
 			state.isRandomLoading = action.payload;
 		},
-		setHomeCharacters: (state: any, action: PayloadAction) => {
+		setHomeCharacters: (
+			state: HomeState,
+			action: PayloadAction<ICharacter[]>,
+		) => {
 			state.characters = action.payload;
 		},
-		setTotalCharacters: (state: any, action: PayloadAction) => {
+		setTotalCharacters: (
+			state: HomeState,
+			action: PayloadAction<number>,
+		) => {
 			state.totalCharacters = action.payload;
 		},
-		setShouldShowReplay: (state: any, action: PayloadAction) => {
+		setShouldShowReplay: (
+			state: HomeState,
+			action: PayloadAction<boolean>,
+		) => {
 			state.shouldShowReplay = action.payload;
 		},
-		setShouldReplay: (state: any, action: PayloadAction) => {
+		setShouldReplay: (state: HomeState, action: PayloadAction<boolean>) => {
 			state.shouldReplay = action.payload;
 		},
 	},

@@ -26,6 +26,7 @@ import {
 	setShouldReplay,
 	setShouldShowReplay,
 } from '../../redux/slices/homeSlice';
+import IMoviesResponse from '../../models/moviesResponse/IMoviesResponse';
 
 /**
  * The MovieDetailsScreen function returns a View component that contains a StatusBar component, a
@@ -52,13 +53,11 @@ const MovieDetailsScreen = () => {
 		return listener;
 	}, []);
 
-	console.log('The Movie:', movie);
-
 	useEffect(() => {
 		dispatch(setIsLoading(true));
 		if (params.prev === 'HomeRandom') {
 			getMovies(params.randomName, {
-				success: (res: any) => {
+				success: (res: IMoviesResponse) => {
 					if (res.Error) {
 						dispatch(setIsLoading(false));
 						Alert.alert(
@@ -97,7 +96,7 @@ const MovieDetailsScreen = () => {
 			});
 		} else {
 			getMovies(params.heroName, {
-				success: (res: any) => {
+				success: (res: IMoviesResponse) => {
 					if (res.Error) {
 						dispatch(setIsLoading(false));
 						Alert.alert(

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
+import ICharacter from '../../../models/character/ICharacter';
 import { RootState } from '../../../redux/store';
 import HeroPreviewItem from '../../atoms/HeroPreviewItem';
 import styles from './styles';
@@ -14,7 +15,7 @@ import styles from './styles';
 const HeroesPreviewList = () => {
 	const { characters } = useSelector((state: RootState) => state.home);
 
-	const RenderCharacters = ({ character }: { character: any }) => {
+	const RenderCharacters = ({ character }: { character: ICharacter }) => {
 		return <HeroPreviewItem character={character} />;
 	};
 

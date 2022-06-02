@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import ICharacter from '../../models/character/ICharacter';
 
 export interface HeroesState {
 	isLoading: boolean;
 	isFooterLoading: boolean;
-	characters: any[];
+	characters: ICharacter[];
 	offset: number;
 }
 
@@ -18,19 +19,28 @@ export const homeSlice = createSlice({
 	name: 'heroes',
 	initialState: initState,
 	reducers: {
-		setIsLoading: (state: any, action: PayloadAction) => {
+		setIsLoading: (state: HeroesState, action: PayloadAction<boolean>) => {
 			state.isLoading = action.payload;
 		},
-		setIsFooterLoading: (state: any, action: PayloadAction) => {
+		setIsFooterLoading: (
+			state: HeroesState,
+			action: PayloadAction<boolean>,
+		) => {
 			state.isFooterLoading = action.payload;
 		},
-		setHeroesCharacters: (state: any, action: PayloadAction) => {
+		setHeroesCharacters: (
+			state: HeroesState,
+			action: PayloadAction<ICharacter[]>,
+		) => {
 			state.characters = action.payload;
 		},
-		addToHeroesCharacters: (state: any, action: PayloadAction) => {
+		addToHeroesCharacters: (
+			state: HeroesState,
+			action: PayloadAction<ICharacter[]>,
+		) => {
 			state.characters.push(...action.payload);
 		},
-		increaseOffset: (state: any, action: PayloadAction) => {
+		increaseOffset: (state: HeroesState, action: PayloadAction<number>) => {
 			state.offset = action.payload;
 		},
 	},
