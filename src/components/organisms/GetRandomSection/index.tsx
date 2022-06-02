@@ -4,7 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import RoundedButton from '../../atoms/RoundedButton';
 import styles from './styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsRandomLoading } from '../../../redux/slices/homeSlice';
+import {
+	setIsRandomLoading,
+	setShouldReplay,
+	setShouldShowReplay,
+} from '../../../redux/slices/homeSlice';
 import { getCharacters } from '../../../api/characters';
 import { RootState } from '../../../redux/store';
 import { generateRandom } from '../../../utils/randomGenerator';
@@ -19,18 +23,29 @@ const GetRandomSection = () => {
 
 	const dispatch = useDispatch();
 
-	const { totalCharacters } = useSelector((state: RootState) => state.home);
+	const { totalCharacters, shouldReplay } = useSelector(
+		(state: RootState) => state.home,
+	);
+
+	useEffect(() => {
+		if (shouldReplay === true) {
+			setTimeout(() => {
+				handleRandom();
+			}, 300);
+		}
+	}, [shouldReplay]);
 
 	const handleRandom = () => {
+		dispatch(setShouldReplay(false));
 		dispatch(setIsRandomLoading(true));
 		const random = generateRandom(totalCharacters);
 		getCharacters(random, {
 			success: (res: any) => {
 				dispatch(setIsRandomLoading(false));
+				dispatch(setShouldShowReplay(true));
 				navigate('MovieDetails', {
 					prev: 'HomeRandom',
 					randomName: res.data.results[0].name,
-					onReturn: (shouldReplay) => handleRandom(),
 				});
 			},
 			error: (error: any) => {

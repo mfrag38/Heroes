@@ -5,6 +5,8 @@ export interface HomeState {
 	isRandomLoading: boolean;
 	characters: any[];
 	totalCharacters: 0;
+	shouldShowReplay: boolean;
+	shouldReplay: boolean;
 }
 
 const initState: HomeState = {
@@ -12,6 +14,8 @@ const initState: HomeState = {
 	isRandomLoading: false,
 	characters: [],
 	totalCharacters: 0,
+	shouldShowReplay: false,
+	shouldReplay: false,
 };
 
 export const homeSlice = createSlice({
@@ -30,6 +34,12 @@ export const homeSlice = createSlice({
 		setTotalCharacters: (state: any, action: PayloadAction) => {
 			state.totalCharacters = action.payload;
 		},
+		setShouldShowReplay: (state: any, action: PayloadAction) => {
+			state.shouldShowReplay = action.payload;
+		},
+		setShouldReplay: (state: any, action: PayloadAction) => {
+			state.shouldReplay = action.payload;
+		},
 	},
 });
 
@@ -38,6 +48,8 @@ export const {
 	setIsRandomLoading,
 	setHomeCharacters,
 	setTotalCharacters,
+	setShouldShowReplay,
+	setShouldReplay,
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

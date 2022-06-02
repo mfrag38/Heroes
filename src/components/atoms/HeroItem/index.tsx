@@ -1,7 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Colors from '../../../constants/Colors';
+import { setShouldShowReplay } from '../../../redux/slices/homeSlice';
+import { urlSecurity } from '../../../utils/httpsGenerator';
 import styles from './styles';
 
 /**
@@ -12,21 +15,25 @@ import styles from './styles';
  */
 const HeroItem = ({ character }: { character: any }) => {
 	const { navigate } = useNavigation();
+	const dispatch = useDispatch();
 
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity
 				style={styles.heroButton}
-				onPress={() =>
+				onPress={() => {
+					dispatch(setShouldShowReplay(false));
 					navigate('MovieDetails', {
 						prev: 'Heroes',
 						heroName: character.name,
-					})
-				}
+					});
+				}}
 			>
 				<Image
 					source={{
-						uri: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+						uri: `${urlSecurity(character.thumbnail.path)}.${
+							character.thumbnail.extension
+						}`,
 					}}
 					resizeMode='cover'
 					style={styles.heroImage}
