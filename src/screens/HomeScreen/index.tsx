@@ -13,6 +13,7 @@ import {
 	setHomeCharacters,
 	setTotalCharacters,
 } from '../../redux/slices/homeSlice';
+import ICharactersResponse from '../../models/charactersResponse/ICharactersResponse';
 
 /**
  * HomeScreen is a function that returns a View component that contains a HomeHeader component, a View
@@ -26,9 +27,9 @@ const HomeScreen = () => {
 	useEffect(() => {
 		dispatch(setIsLoading(true));
 		getCharacters(0, {
-			success: (res: any) => {
-				dispatch(setHomeCharacters(res.data.results));
-				dispatch(setTotalCharacters(res.data.total));
+			success: (res: ICharactersResponse) => {
+				dispatch(setHomeCharacters(res?.data?.results));
+				dispatch(setTotalCharacters(res?.data?.total));
 				dispatch(setIsLoading(false));
 			},
 			error: (error: any) => {

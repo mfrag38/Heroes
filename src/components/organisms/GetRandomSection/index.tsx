@@ -12,6 +12,7 @@ import {
 import { getCharacters } from '../../../api/characters';
 import { RootState } from '../../../redux/store';
 import { generateRandom } from '../../../utils/randomGenerator';
+import ICharactersResponse from '../../../models/charactersResponse/ICharactersResponse';
 
 /**
  * It's a function that returns a View component that contains a Text component and a RoundedButton
@@ -40,7 +41,7 @@ const GetRandomSection = () => {
 		dispatch(setIsRandomLoading(true));
 		const random = generateRandom(totalCharacters);
 		getCharacters(random, {
-			success: (res: any) => {
+			success: (res: ICharactersResponse) => {
 				dispatch(setIsRandomLoading(false));
 				dispatch(setShouldShowReplay(true));
 				navigate('MovieDetails', {

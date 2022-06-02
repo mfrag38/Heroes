@@ -3,6 +3,8 @@ import { ActivityIndicator, FlatList, View } from 'react-native';
 import { scale } from 'react-native-utils-scale';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCharacters } from '../../../api/characters';
+import ICharacter from '../../../models/character/ICharacter';
+import ICharactersResponse from '../../../models/charactersResponse/ICharactersResponse';
 import {
 	addToHeroesCharacters,
 	increaseOffset,
@@ -27,14 +29,14 @@ const HeroesList = () => {
 
 	const [callOnScrollEnd, setCallOnScrollEnd] = useState(false);
 
-	const RenderCharacters = ({ character }: { character: any }) => {
+	const RenderCharacters = ({ character }: { character: ICharacter }) => {
 		return <HeroItem character={character} />;
 	};
 
 	const fetchMoreCharacters = async () => {
 		dispatch(setIsFooterLoading(true));
 		getCharacters(offset, {
-			success: (res: any) => {
+			success: (res: ICharactersResponse) => {
 				dispatch(addToHeroesCharacters(res.data.results));
 				dispatch(increaseOffset(offset + 10));
 				dispatch(setIsFooterLoading(false));
