@@ -22,6 +22,10 @@ import {
 	setIsLoading,
 	setMovie,
 } from '../../redux/slices/movieSlice';
+import {
+	setShouldReplay,
+	setShouldShowReplay,
+} from '../../redux/slices/homeSlice';
 
 /**
  * The MovieDetailsScreen function returns a View component that contains a StatusBar component, a
@@ -48,6 +52,8 @@ const MovieDetailsScreen = () => {
 		return listener;
 	}, []);
 
+	console.log('The Movie:', movie);
+
 	useEffect(() => {
 		dispatch(setIsLoading(true));
 		if (params.prev === 'HomeRandom') {
@@ -57,10 +63,21 @@ const MovieDetailsScreen = () => {
 						dispatch(setIsLoading(false));
 						Alert.alert(
 							'Error',
-							'Cannot find a movie for that random superhero.',
+							'Cannot find a movie for that random superhero, Would you like to try again?',
 							[
 								{
-									onPress: goBack,
+									text: 'no',
+									onPress: () => {
+										dispatch(setShouldReplay(false));
+										goBack();
+									},
+								},
+								{
+									text: 'yes',
+									onPress: () => {
+										dispatch(setShouldReplay(true));
+										goBack();
+									},
 								},
 							],
 						);
@@ -85,9 +102,10 @@ const MovieDetailsScreen = () => {
 						dispatch(setIsLoading(false));
 						Alert.alert(
 							'Error',
-							`No movie found for ${params.heroName}`,
+							`No movie found for ${params.heroName}, Try again with different one.`,
 							[
 								{
+									text: 'Ok',
 									onPress: goBack,
 								},
 							],
@@ -126,9 +144,9 @@ const MovieDetailsScreen = () => {
 			<MovieHeader
 				animatedValue={AnimatedHeaderValue}
 				poster={movie ? movie.Poster : ''}
-				shouldReplay={params.prev === 'HomeRandom'}
 				replay={() => {
-					params.onReturn(true);
+					dispatch(setShouldShowReplay(false));
+					dispatch(setShouldReplay(true));
 					goBack();
 				}}
 			/>

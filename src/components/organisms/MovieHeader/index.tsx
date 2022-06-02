@@ -8,6 +8,8 @@ import {
 	View,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../redux/store';
 import styles from './styles';
 
 const height = Dimensions.get('window').height;
@@ -15,15 +17,15 @@ const height = Dimensions.get('window').height;
 const MovieHeader = ({
 	animatedValue,
 	poster,
-	shouldReplay,
 	replay,
 }: {
 	animatedValue: Animated.Value;
 	poster: string;
-	shouldReplay: boolean;
 	replay?: Function;
 }) => {
 	const { goBack } = useNavigation();
+	const { shouldShowReplay } = useSelector((state: RootState) => state.home);
+
 	const MAX_HEIGHT = height / 2.75;
 	const MIN_HEIGHT = 75;
 
@@ -43,9 +45,15 @@ const MovieHeader = ({
 			]}
 		>
 			<ImageBackground
-				source={{
-					uri: poster,
-				}}
+				source={
+					poster
+						? poster !== 'N/A'
+							? {
+									uri: poster,
+							  }
+							: require('../../../assets/images/placeholder.png')
+						: require('../../../assets/images/placeholder.png')
+				}
 				resizeMode='cover'
 				style={styles.headerImage}
 			>
@@ -57,7 +65,7 @@ const MovieHeader = ({
 						<Icon name='chevron-left' size={24} color='#fff' />
 					</TouchableOpacity>
 				</View>
-				{shouldReplay ? (
+				{shouldShowReplay ? (
 					<View style={styles.replayIconContainer}>
 						<TouchableOpacity
 							style={styles.backIconButton}

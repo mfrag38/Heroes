@@ -1,6 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { ImageBackground, Text, TouchableOpacity } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { setShouldShowReplay } from '../../../redux/slices/homeSlice';
+import { urlSecurity } from '../../../utils/httpsGenerator';
 import styles from './styles';
 
 /**
@@ -11,20 +14,24 @@ import styles from './styles';
  */
 const HeroPreviewItem = ({ character }: { character: any }) => {
 	const { navigate } = useNavigation();
+	const dispatch = useDispatch();
 
 	return (
 		<TouchableOpacity
 			style={styles.container}
-			onPress={() =>
+			onPress={() => {
+				dispatch(setShouldShowReplay(false));
 				navigate('MovieDetails', {
 					prev: 'Home',
 					heroName: character.name,
-				})
-			}
+				});
+			}}
 		>
 			<ImageBackground
 				source={{
-					uri: `${character.thumbnail.path}.${character.thumbnail.extension}`,
+					uri: `${urlSecurity(character.thumbnail.path)}.${
+						character.thumbnail.extension
+					}`,
 				}}
 				resizeMode='cover'
 				style={styles.imageContainer}

@@ -8,7 +8,7 @@ const HomeHeader = () => {
 		<View style={styles.container}>
 			<Text style={styles.headerTitle}>Heroes</Text>
 			<Image
-				source={require('../../../assets/logo.png')}
+				source={require('../../../assets/images/logo.png')}
 				resizeMode='contain'
 				style={styles.headerImage}
 			/>
